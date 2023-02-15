@@ -37,6 +37,12 @@ namespace Our.Umbraco.PersonalisationGroups.Core.Providers.Ip
                 return testIp;
             }
 
+            var aspIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString();
+            if (!string.IsNullOrEmpty(aspIp))
+            {
+                return aspIp;
+            }
+
             // Otherwise retrieve from the HTTP context
             var requestServerVariables = _httpContextAccessor.HttpContext.Request.Headers;
             return _clientIpParser.ParseClientIp(requestServerVariables);
