@@ -31,10 +31,16 @@ namespace Our.Umbraco.PersonalisationGroups.Core.Providers.Ip
         private string GetIpFromHttpContext()
         {
             // Return a test Ip if we've configured one
-            var testIp = _config.TestFixedIp;
+            var testIp = _config.TestFixedIp; 
             if (!string.IsNullOrEmpty(testIp))
             {
                 return testIp;
+            }
+
+            var aspIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString();
+            if (!string.IsNullOrEmpty(aspIp))
+            {
+                return aspIp;
             }
 
             // Otherwise retrieve from the HTTP context

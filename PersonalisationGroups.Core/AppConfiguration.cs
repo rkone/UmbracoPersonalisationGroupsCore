@@ -19,7 +19,7 @@ namespace Our.Umbraco.PersonalisationGroups.Core
                 name: "Member methods",
                 pattern: "App_Plugins/PersonalisationGroups/Member/{action}",
                 defaults: new { controller = "Member", action = "Index" });
-
+            
             return builderContext;
         }
     }

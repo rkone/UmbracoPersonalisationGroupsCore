@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Our.Umbraco.PersonalisationGroups.Core.Configuration;
 using Our.Umbraco.PersonalisationGroups.Core.Extensions;
@@ -8,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Umbraco.Cms.Core.Cache;
-using Umbraco.Cms.Core.Hosting;
+using Umbraco.Extensions;
 
 namespace Our.Umbraco.PersonalisationGroups.Core.Controllers
 {
@@ -18,10 +19,10 @@ namespace Our.Umbraco.PersonalisationGroups.Core.Controllers
     public class GeoLocationController : ControllerBase
     {
         private readonly PersonalisationGroupsConfig _config;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly AppCaches _appCaches;
 
-        public GeoLocationController(IOptions<PersonalisationGroupsConfig> config, IHostingEnvironment hostingEnvironment, AppCaches appCaches)
+        public GeoLocationController(IOptions<PersonalisationGroupsConfig> config, IWebHostEnvironment hostingEnvironment, AppCaches appCaches)
         {
             _config = config.Value;
             _hostingEnvironment = hostingEnvironment;
