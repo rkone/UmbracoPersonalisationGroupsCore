@@ -29,7 +29,7 @@ It contains a few different pieces:
 	- Umbraco member type
 - An extensible mechanism to allow other criteria to be created and loaded from other assemblies
 - A property editor with associated angular controllers/views that provide the means of configuring personalisation groups based on the available criteria
-- A extension methods on `IPublishedContent/IPublishedElement` and `UmbracoHelper` named `ShowToVisitor()` and `ScoreForVisitor()` that allows for showing, hiding or ordering ranking content for the current site visitor
+- Extension methods on `IPublishedContent/IPublishedElement` and `UmbracoHelper` named `ShowToVisitor()` and `ScoreForVisitor()` that allows for showing, hiding or ordering content for the current site visitor
 
 ## Using the package
 
@@ -193,29 +193,41 @@ The keys for this cookie and session can be amended in configuration if required
 
 ## Configuration
 
-No configuration is required if you are happy to accept the default behaviour of the package.  The following optional keys can be added to your `appSettings.json` if required to amend this.
+No configuration is required if you are happy to accept the default behaviour of the package.
 
-- `<add key="personalisationGroups.disabled" value="false"/>` - disables the filtering of content by personalisation groups, if this is set to true your content won't differ no matter what is configured in Umbraco
-- `<add key="personalisationGroups.groupPickerAlias" value="myCustomAlias"/>` - amends the alias that must be used when creating a property field of type personalisation group picker
-- `<add key="personalisationGroups.geoLocationCountryDatabasePath" value="/my/custom/relative/path"/>` - amends the convention path for where the IP-country geolocation database can be found. See the "Country and region" section below for more details.
-- `<add key="personalisationGroups.geoLocationCityDatabasePath" value="/my/custom/relative/path"/>` - amends the convention path for where the IP-city geolocation database can be found. See the "Country and region" section below for more details.
-- `<add key="personalisationGroups.geoLocationRegionListPath" value="/my/custom/relative/path"/>` - if provided, the file referenced will be used to construct the list of regions for selection. See the "Country and region" section below for more details.
-- `<add key="personalisationGroups.includeCriteria" value="alias1,alias2"/>` - provides the specific list of criteria to make available for creating personsaliation groups
-- `<add key="personalisationGroups.excludeCriteria" value="alias1,alias2"/>` - provides a list of criteria to exclude from the full list of available criteria made available for creating personsaliation groups
-- `<add key="personalisationGroups.numberOfVisitsTrackingCookieExpiryInDays" value="90"/>` - sets the expiry time for the cookie used for number of visits page tracking for the pages viewed criteria (default if not provided is 90)
-- `<add key="personalisationGroups.viewedPagesTrackingCookieExpiryInDays" value="90"/>` - sets the expiry time for the cookie used for viewed page tracking for the pages viewed criteria (default if not provided is 90)
-- `<add key="personalisationGroups.cookieKeyForTrackingNumberOfVisits" value="myCookieKey"/>` - defines the cookie key name used for tracking the number of visits
-- `<add key="personalisationGroups.cookieKeyForTrackingIfSessionAlreadyTracked" value="myCookieKey"/>` - defines the cookie key name used for tracking if the session has been recorded for the number of visits criteria, default is `personalisationGroupsNumberOfVisitsSessionStarted`
-- `<add key="personalisationGroups.cookieKeyForTrackingPagesViewed" value="myCookieKey"/>` - defines the cookie key name used for tracking pages viewed
-- `<add key="personalisationGroups.cookieKeyForSessionMatchedGroups" value="myCookieKey"/>` - defines the cookie key name used for tracking which session level groups the visitor has matched
-- `<add key="personalisationGroups.cookieKeyForPersistentMatchedGroups" value="myCookieKey"/>` - defines the cookie key name used for tracking which persistent (visitor) level groups the visitor has matched
-- `<add key="personalisationGroups.cookieKeyForTrackingCookiesDeclined" value="myCookieKey"/>` - defines the cookie key name used for tracking if a user has declined cookies
-- `<add key="personalisationGroups.sessionKeyForTrackingCookiesDeclined" value="mySessionKey"/>` - defines the session key name used for tracking if a user has declined cookies
-- `<add key="personalisationGroups.persistentMatchedGroupsCookieExpiryInDays" value="90"/>` - sets the expiry time for the cookie used for tracking which persistent (visitor) level groups the visitor has matched (default if not provided is 90)
-- `<add key="personalisationGroups.testFixedIp" value="37.117.73.202"/>` - sets up an "spoof" IP address to use, in preference to the actual one used for browsing the site, for testing country and/or region matching using IP address
-- `<add key="personalisationGroups.countryCodeProvider" value="MaxMindDatabase|CdnHeader"/>` - indicates which provider to use for country matching (the default is the MaxMind geo-location database, but a CDN header, e.g. that from [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-Cloudflare-IP-Geolocation-do-) is available to be configured to use too.
-- `<add key="personalisationGroups.cdnCountryCodeHttpHeaderName" value="CF-IPCountry"/>` - if a CDN header is used for country matching due to the above configuration setting, this key can be used to define which header is looked for.  If not provided, the default value of CF-IPCountry (as used by Cloudflare CDN) is used.
-- `<add key="personalisationGroups.disableHttpContextItemsUseInCookieOperations" value="false"/>` - should anyone require it, setting this value to true will restore the previous behaviour for cookie handling amended in 1.0.5/2.1.6.
+Optioanl keys and values can be added to your `appSettings.json` if required to amend this, within _Umbraco:PersonalisationGroups_, e.g.:
+
+```
+  "Umbraco": {
+    "PersonalisationGroups": {
+      "GroupPickerAlias": ""myCustomAlias"
+    }
+  }
+```
+
+The following configuration is available:
+
+- `DisablePackage` - disables the filtering of content by personalisation groups, if this is set to true your content won't differ no matter what is configured in Umbraco.
+- `GroupPickerAlias` - amends the alias that must be used when creating a property field of type personalisation group picker.
+- `GeoLocationCountryDatabasePath` - amends the convention path for where the IP-country geolocation database can be found. See the "Country and region" section below for more details.
+- `GeoLocationCityDatabasePath` - amends the convention path for where the IP-city geolocation database can be found. See the "Country and region" section below for more details.
+- `GeoLocationRegionListPath` - if provided, the file referenced will be used to construct the list of regions for selection. See the "Country and region" section below for more details.
+- `IncludeCriteria` - provides the specific list of criteria to make available for creating personsaliation groups.
+- `ExcludeCriteria` - provides a list of criteria to exclude from the full list of available criteria made available for creating personsaliation groups.
+- `NumberOfVisitsTrackingCookieExpiryInDays` - sets the expiry time for the cookie used for number of visits page tracking for the pages viewed criteria (default if not provided is 90).
+- `ViewedPagesTrackingCookieExpiryInDays` - sets the expiry time for the cookie used for viewed page tracking for the pages viewed criteria (default if not provided is 90).
+- `CookieKeyForTrackingNumberOfVisits` - defines the cookie key name used for tracking the number of visits.
+- `CookieKeyForTrackingIfSessionAlreadyTracked` - defines the cookie key name used for tracking if the session has been recorded for the number of visits criteria, default is `personalisationGroupsNumberOfVisitsSessionStarted`.
+- `CookieKeyForTrackingPagesViewed` - defines the cookie key name used for tracking pages viewed.
+- `CookieKeyForSessionMatchedGroups` - defines the cookie key name used for tracking which session level groups the visitor has matched.
+- `CookieKeyForPersistentMatchedGroups` - defines the cookie key name used for tracking which persistent (visitor) level groups the visitor has matched.
+- `CookieKeyForTrackingCookiesDeclined` - defines the cookie key name used for tracking if a user has declined cookies.
+- `SessionKeyForTrackingCookiesDeclined` - defines the session key name used for tracking if a user has declined cookies.
+- `PersistentMatchedGroupsCookieExpiryInDays` - sets the expiry time for the cookie used for tracking which persistent (visitor) level groups the visitor has matched (default if not provided is 90).
+- `TestFixedIp` - sets up an "spoof" IP address to use, in preference to the actual one used for browsing the site, for testing country and/or region matching using IP address.
+- `CountryCodeProvider` - indicates which provider to use for country matching (the default is the MaxMind geo-location database, but a CDN header, e.g. that from [Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-Cloudflare-IP-Geolocation-do-) is available to be configured to use too.
+- `CdnCountryCodeHttpHeaderName` - if a CDN header is used for country matching due to the above configuration setting, this key can be used to define which header is looked for.  If not provided, the default value of CF-IPCountry (as used by Cloudflare CDN) is used.
+- `DisableHttpContextItemsUseInCookieOperations` - should anyone require it, setting this value to true will restore the previous behaviour for cookie handling amended in 1.0.5/2.1.6.
 
 ## How it works
 
@@ -271,11 +283,11 @@ There's also a related extension method on `UmbracoHelper` defined in `UmbracoHe
 
 ### Country and region
 
-The country criteria uses the [free GeoLite2 IP to country database](http://dev.maxmind.com/geoip/geoip2/geolite2/) made available by Maxmind.com.  It will look for it in `/App_Data/GeoLite2-Country.mmdb` or at the path specified in configuration.
+The country criteria uses the [free GeoLite2 IP to country database](http://dev.maxmind.com/geoip/geoip2/geolite2/) made available by Maxmind.com.  It will look for it in `/umbraco/Data/PersonalisationGroups/GeoLite2-Country.mmdb` or at the path specified in configuration.
 
-Similarly the region criteria uses the city database available from the same link above.  Similarly it will be read from the default location of `/App_Data/GeoLite2-City.mmdb` or at the path specified in configuration.
+Similarly the region criteria uses the city database available from the same link above.  It will be read from the default location of `/umbraco/Data/PersonalisationGroups/GeoLite2-City.mmdb` or at the path specified in configuration.
 
-When it comes to selecting regions to match against, the list of regions available is provided by the package from a [list provided by Maxmind](https://www.maxmind.com/download/geoip/misc/region_codes.csv). If you want to override this list, you can do so by taking a copy of this file, saving it to a relative path (likely in `App_Data`) and referencing it in configuration.  Doing this for example would allow you to override the region names from local language to English (we've found that in some cases, matches are more likely having done this).
+When it comes to selecting regions to match against, the list of regions available is provided by the package from a [list provided by Maxmind](https://www.maxmind.com/download/geoip/misc/region_codes.csv). If you want to override this list, you can do so by taking a copy of this file, saving it to a relative path (likely in `/umbraco/Data/PersonalisationGroups/`) and referencing it in configuration.  Doing this for example would allow you to override the region names from local language to English (we've found that in some cases, matches are more likely having done this).
 
 If you are using a CDN, it's possible to use a feature that provides the user's geographical country location in a header [such as that provided by Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-Cloudflare-IP-Geolocation-do-).  To use that method instead, apply the configuration described above.
 
@@ -372,3 +384,9 @@ See [here](https://github.com/AndyButland/UmbracoPersonalisationGroups#version-h
 - 3.2.3
     - Removed use of depreciated methods that were removed in Umbraco 11, allowing support for the package on that version. From [PR #8](https://github.com/AndyButland/UmbracoPersonalisationGroupsCore/pull/8)
     - Hooked up the tracking of pages viewed and number of visits to cookies.
+ - 3.2.4
+    - Fixed default configuration of geolocation databases.
+ - 3.2.5
+    - Added fallback for client IP detection to use remote address on the connection if not found in a header.
+- 3.2.6
+    - Added icon and readme.

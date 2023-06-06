@@ -57,7 +57,7 @@ namespace Our.Umbraco.PersonalisationGroups.Core.Providers.GeoLocation
                         catch (FileNotFoundException)
                         {
                             throw new FileNotFoundException(
-                                $"MaxMind Geolocation database required for locating visitor continent from IP address not found, expected at: {_pathToCountryDb}. The path is derived from either the default ({AppConstants.DefaultGeoLocationCountryDatabasePath}) or can be configured using a relative path in an appSetting with key: \"{AppConstants.ConfigKeys.CustomGeoLocationCountryDatabasePath}\"",
+                                $"MaxMind Geolocation database required for locating visitor continent from IP address not found, expected at: {_pathToCountryDb}. The path is derived from either the default ({AppConstants.DefaultGeoLocationCountryDatabasePath}) or can be configured using a relative path in an appSetting with key: \"{nameof(PersonalisationGroupsConfig.GeoLocationCountryDatabasePath)}\"",
                                 _pathToCountryDb);
                         }
                     });
@@ -98,7 +98,7 @@ namespace Our.Umbraco.PersonalisationGroups.Core.Providers.GeoLocation
                     catch (FileNotFoundException)
                     {
                         throw new FileNotFoundException(
-                            $"MaxMind Geolocation database required for locating visitor country from IP address not found, expected at: {_pathToCountryDb}. The path is derived from either the default ({AppConstants.DefaultGeoLocationCountryDatabasePath}) or can be configured using a relative path in an appSetting with key: \"{AppConstants.ConfigKeys.CustomGeoLocationCountryDatabasePath}\"",
+                            $"MaxMind Geolocation database required for locating visitor country from IP address not found, expected at: {_pathToCountryDb}. The path is derived from either the default ({AppConstants.DefaultGeoLocationCountryDatabasePath}) or can be configured using a relative path in an appSetting with key: \"{nameof(PersonalisationGroupsConfig.GeoLocationCountryDatabasePath)}\"",
                             _pathToCountryDb);
                     }
                 });
@@ -156,7 +156,7 @@ namespace Our.Umbraco.PersonalisationGroups.Core.Providers.GeoLocation
                     catch (FileNotFoundException)
                     {
                         throw new FileNotFoundException(
-                            $"MaxMind Geolocation database required for locating visitor region from IP address not found, expected at: {_pathToCountryDb}. The path is derived from either the default ({AppConstants.DefaultGeoLocationCountryDatabasePath}) or can be configured using a relative path in an appSetting with key: \"{AppConstants.ConfigKeys.CustomGeoLocationCountryDatabasePath}\"",
+                            $"MaxMind Geolocation database required for locating visitor region from IP address not found, expected at: {_pathToCountryDb}. The path is derived from either the default ({AppConstants.DefaultGeoLocationCountryDatabasePath}) or can be configured using a relative path in an appSetting with key: \"{nameof(PersonalisationGroupsConfig.GeoLocationCityDatabasePath)}\"",
                                 _pathToCountryDb);
                     }
                 });
