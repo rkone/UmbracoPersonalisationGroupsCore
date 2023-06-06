@@ -44,8 +44,7 @@ namespace Our.Umbraco.PersonalisationGroups.Core.Providers.Ip
             }
 
             // Otherwise retrieve from the HTTP context
-            var requestServerVariables = _httpContextAccessor.HttpContext.Request.Headers;
-            return _clientIpParser.ParseClientIp(requestServerVariables);
+            return _clientIpParser.ParseClientIp(_httpContextAccessor.HttpContext);
         }
     }
 }
