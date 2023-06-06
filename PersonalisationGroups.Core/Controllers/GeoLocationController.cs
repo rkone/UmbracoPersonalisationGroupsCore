@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Umbraco.Cms.Core.Cache;
-using Umbraco.Cms.Core.Extensions;
 using Umbraco.Extensions;
 
 namespace Our.Umbraco.PersonalisationGroups.Core.Controllers
@@ -198,7 +197,7 @@ namespace Our.Umbraco.PersonalisationGroups.Core.Controllers
             var customFilePath = _config.GeoLocationRegionListPath;
             if (!string.IsNullOrEmpty(customFilePath))
             {
-                var mappedPath = _hostingEnvironment.MapPathContentRoot(customFilePath);
+                var mappedPath = _hostingEnvironment.MapPathWebRoot(customFilePath);
                 if (!string.IsNullOrEmpty(mappedPath) && System.IO.File.Exists(mappedPath))
                 {
                     return System.IO.File.OpenRead(mappedPath);
