@@ -5,7 +5,7 @@
 		<PackageId>UmbracoPersonalisationGroups.Core</PackageId>
 		<RootNamespace>Our.Umbraco.PersonalisationGroups.Core</RootNamespace>
 		<Description>Core library for UmbracoPersonalisationGroups, an Umbraco 9 package supporting personalisation of content to different groups of site visitors.</Description>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -13,9 +13,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MaxMind.GeoIP2" Version="5.1.0" />
+		<PackageReference Include="MaxMind.GeoIP2" Version="5.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.HttpOverrides" Version="2.2.0" />
-		<PackageReference Include="Umbraco.Cms.Web.Common" Version="11.4.0" />
+		<PackageReference Include="Umbraco.Cms.Web.Common" Version="12.3.3" />
 	</ItemGroup>
 
 	<ItemGroup>
